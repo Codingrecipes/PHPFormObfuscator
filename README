@@ -1,0 +1,22 @@
+This is a class I developed a while back while working on a project of mine and we already know that it’s very effective.
+In order to understand what it does you need to first understand how a browser sends a POST request.
+When a user submits a form, browser sends something like this to the server:
+POST /somepage.php HTTP/1.1
+Host: example.com
+Content-Type: application/x-www-form-urlencoded
+Content-Length: THE LENGTH
+
+username=blah&password=blah&email=some_email
+There are 2 problems with this:
+1 – Someone along the way can view the password and email address by looking at the packets that are going to the server. (take a look at Wireshark software)
+2 – You can send automatic queries to servers, for example automated spam through contact forms works like this. (some spam software can also read Captcha images so you need more protection)
+The class I developed will change this POST request to something like this:
+POST /somepage.php HTTP/1.1
+Host: example.com
+Content-Type: application/x-www-form-urlencoded
+Content-Length: THE LENGTH
+
+JDF8W9JHF=blah&OEROWF83=blah&VLKDSFOE=some_email
+Note that the field names are changed to random strings, and they also change every time the form is shown, so:
+1 – Even if a user in the middle can see the packets, he/she won’t know that OEROWF83 stands for “password”.
+2 – A spam software won’t have a way of guessing the field names because they are random every time. There is also a secret encryption key which you only know what it is.
